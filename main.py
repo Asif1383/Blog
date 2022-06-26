@@ -9,11 +9,13 @@ from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from forms import CreatePostForm, CreateRegistrationForm, LoginForm, CommentSection
 from flask_gravatar import Gravatar
-
 from sqlalchemy import ForeignKey
+
+####Intialization
+
 is_logged_in = False
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = 'TOP SECRET'
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -25,7 +27,7 @@ gravatar = Gravatar(app,
                     force_default=False,
                     force_lower=False,
                     use_ssl=False,
-                    base_url='https://www.gravatar.com/')
+                    base_url='none')
 
 ##CONNECT TO LOGIN_MANAGER
 login_manager = LoginManager()
@@ -158,7 +160,7 @@ def register():
         user_to_add = User(name=registration_form.name.data,
                                     password=password_in_database,
                                     email=registration_form.email.data
-                                                )
+                                     )
         db.session.add(user_to_add)
         db.session.commit()
         login_user(user_to_add)
