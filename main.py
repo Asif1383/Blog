@@ -16,7 +16,7 @@ import os
 
 is_logged_in = False
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] =os.environ.get('SECRET_KEY')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -53,6 +53,7 @@ def admin_only(f):
 
 @login_manager.user_loader
 def load_user(user_id):
+    print('Hello')
     return User.query.get(int(user_id))
 
 
@@ -134,8 +135,8 @@ def contact():
 
 @app.route('/')
 def get_all_posts():
-    posts = BlogPost.query.all()
 
+    posts = BlogPost.query.all()
     return render_template("index.html", all_posts=posts, is_logged_in=current_user.is_authenticated)
 
 # registration page
@@ -186,6 +187,7 @@ def login():
         if user:
 
             if check_password_hash(user.password, password=password_of_user):
+
                 login_user(user)
                 return redirect(url_for('get_all_posts'))
             else:
